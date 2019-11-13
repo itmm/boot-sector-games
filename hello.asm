@@ -1,5 +1,7 @@
-	org 0x0100
+	org 0x7c00
 start:
+	push cs
+	pop ds
 	mov bx,string
 repeat:
 	mov al,[bx]
@@ -14,8 +16,10 @@ repeat:
 	jmp repeat
 
 end:
-	int 0x20
+	jmp $
 
 string:
 	db "Hello, world",0
 
+	times 510-($-$$) db 0
+	db 0x55,0xaa
