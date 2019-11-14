@@ -40,3 +40,7 @@
 @inc(inc.md)
 ```
 
+```
+@inc(tic-tac-toe.md)
+```
+

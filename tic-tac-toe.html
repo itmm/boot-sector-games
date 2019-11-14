@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tic Tac Toe</title>
+<link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
+<body>
+<h1>Tic Tac Toe</h1>
+<div class="slides">
+<div>
+<div>
+<h1>Tic Tac Toe</h1>
+</div>
+</div>
+<div><div>
+<code>
+<span class="macro">@inc(<span class="name"><a href="base.html">base.md</a></span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@inc(<span class="name"><a href="io.html">io.md</a></span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@Def(<span class="name">file: tic-tac-toe.asm</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">pre</span>)</span><br/>
+<span class="in1"></span><span class="macro">@put(<span class="name">steps</span>)</span><br/>
+<span class="macro">@End(<span class="name">file: tic-tac-toe.asm</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@def(<span class="name">steps</span>)</span><br/>
+<span class="var">board</span>: <span class="var">equ</span> <span class="num">0x8000</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="var">board</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">cx</span>,<span class="num">9</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'1'</span><br/>
+<span class="var">init_loop</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> [<span class="var">bx</span>],<span class="var">al</span><br/>
+<span class="in1"></span><span class="var">inc</span> <span class="var">al</span><br/>
+<span class="in1"></span><span class="var">inc</span> <span class="var">bx</span><br/>
+<span class="in1"></span><span class="var">loop</span> <span class="var">init_loop</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">loop</span>:<br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_board</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">get_movement</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">byte</span> [<span class="var">bx</span>],<span class="str">'X'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_board</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">get_movement</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">byte</span> [<span class="var">bx</span>],<span class="str">'O'</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">loop</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">show_board</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="var">board</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_row</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_div</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="var">board</span>+<span class="num">3</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_row</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_div</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="var">board</span>+<span class="num">6</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_row</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">find_line</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">show_row</span>:<br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_square</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'|'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_square</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'|'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_square</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">show_crlf</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="num">0x0d</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="num">0x0a</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">putc</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">show_div</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'-'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'+'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'-'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'+'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'-'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">show_crlf</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">show_square</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">bx</span>]<br/>
+<span class="in1"></span><span class="var">inc</span> <span class="var">bx</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">putc</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">get_movement</span>:<br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">getc</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,<span class="num">0x1b</span><br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">end</span><br/>
+<span class="in1"></span><span class="var">sub</span> <span class="var">al</span>,<span class="num">0x31</span><br/>
+<span class="in1"></span><span class="var">jc</span> <span class="var">get_movement</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,<span class="num">9</span><br/>
+<span class="in1"></span><span class="var">jnc</span> <span class="var">get_movement</span><br/>
+<span class="in1"></span><span class="var">cbw</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="var">board</span><br/>
+<span class="in1"></span><span class="var">add</span> <span class="var">bx</span>,<span class="var">ax</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">bx</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,<span class="num">0x40</span><br/>
+<span class="in1"></span><span class="var">jnc</span> <span class="var">get_movement</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">show_crlf</span><br/>
+<span class="in1"></span><span class="var">ret</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">find_line</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">board</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">1</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_1st_row</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">2</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_1st_row</span>:<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">3</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_1st_col</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">6</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_1st_col</span>:<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">4</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_1st_diag</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">8</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_1st_diag</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">3</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">4</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_2nd_row</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">5</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_2nd_row</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">6</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">7</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_3rd_row</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">8</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_3rd_row</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">1</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">4</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_2nd_col</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">7</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_2nd_col</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">2</span>]<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">5</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_3rd_col</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">8</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">not_3rd_col</span>:<br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">4</span>]<br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">not_2nd_diag</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,[<span class="var">board</span>+<span class="num">6</span>]<br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">won</span><br/>
+<span class="var">not_2nd_diag</span>:<br/>
+<span class="in1"></span><span class="var">ret</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">won</span>:<br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">' '</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'w'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'i'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'n'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'s'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">end</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">getc</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">putc</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">fill</span>)</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+</body>
+</html>
