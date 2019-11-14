@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guess Game</title>
+<link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
+<body>
+<h1>Guess Game</h1>
+<div class="slides">
+<div>
+<div>
+<h1>Guess Game</h1>
+</div>
+</div>
+<div><div>
+<code>
+<span class="macro">@inc(<span class="name"><a href="base.html">base.md</a></span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@inc(<span class="name"><a href="io.html">io.md</a></span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@Def(<span class="name">file: guess.asm</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">pre</span>)</span><br/>
+<span class="in1"></span><span class="macro">@put(<span class="name">steps</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">end</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">putc</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">getc</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">fill</span>)</span><br/>
+<span class="macro">@End(<span class="name">file: guess.asm</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@def(<span class="name">steps</span>)</span><br/>
+<span class="in1"></span><span class="keyword">in</span> <span class="var">al</span>,(<span class="num">0x40</span>)<br/>
+<span class="in1"></span><span class="var">and</span> <span class="var">al</span>,<span class="num">0x07</span><br/>
+<span class="in1"></span><span class="var">add</span> <span class="var">al</span>,<span class="num">0x30</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">cl</span>,<span class="var">al</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="var">loop</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">'?'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">getc</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,<span class="var">cl</span><br/>
+<span class="in1"></span><span class="var">jne</span> <span class="var">loop</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@add(<span class="name">steps</span>)</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">':'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">al</span>,<span class="str">')'</span><br/>
+<span class="in1"></span><span class="var">call</span> <span class="var">putc</span><br/>
+<span class="macro">@end(<span class="name">steps</span>)</span><br/>
+</code></div>
+</div>
+</body>
+</html>

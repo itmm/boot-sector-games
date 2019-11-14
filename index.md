@@ -41,6 +41,14 @@
 ```
 
 ```
+@inc(guess.md)
+```
+
+```
+@inc(primes.md)
+```
+
+```
 @inc(tic-tac-toe.md)
 ```
 
