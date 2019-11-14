@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Simple echo client</title>
+<link rel="stylesheet" type="text/css" href="slides/slides.css"></head>
+<body>
+<h1>Simple echo client</h1>
+<div class="slides">
+<div>
+<div>
+<h1>Simple echo client</h1>
+</div>
+</div>
+<div><div>
+<code>
+<span class="macro">@inc(<span class="name"><a href="base.html">base.md</a></span>)</span><br/>
+</code></div>
+</div>
+<div><div>
+<code>
+<span class="macro">@Def(<span class="name">file: echo.asm</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">pre</span>)</span><br/>
+<span class="var">loop</span>:<br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">ah</span>,<span class="num">0x00</span><br/>
+<span class="in1"></span><span class="type">int</span> <span class="num">0x16</span><br/>
+<span class="in1"></span><span class="var">cmp</span> <span class="var">al</span>,<span class="num">0x1b</span><br/>
+<span class="in1"></span><span class="var">je</span> <span class="var">end</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">ah</span>,<span class="num">0x0e</span><br/>
+<span class="in1"></span><span class="var">mov</span> <span class="var">bx</span>,<span class="num">0x000f</span><br/>
+<span class="in1"></span><span class="type">int</span> <span class="num">0x10</span><br/>
+<span class="in1"></span><span class="var">jmp</span> <span class="var">loop</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">end</span>)</span><br/>
+<span class="in1"></span><span class="macro">@Mul(<span class="name">fill</span>)</span><br/>
+<span class="macro">@End(<span class="name">file: echo.asm</span>)</span><br/>
+</code></div>
+</div>
+</body>
+</html>
