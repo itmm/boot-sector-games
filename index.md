@@ -32,3 +32,11 @@
 @inc(not.md)
 ```
 
+```
+@inc(shift.md)
+```
+
+```
+@inc(inc.md)
+```
+
