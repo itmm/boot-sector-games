@@ -28,3 +28,7 @@
 @inc(and.md)
 ```
 
+```
+@inc(not.md)
+```
+
