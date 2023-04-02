@@ -1,2 +1,0 @@
-#!/bin/bash
-dosbox -c "boot $1"
