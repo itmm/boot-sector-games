@@ -4,12 +4,6 @@ FLOPPYs =$(SRCs:.asm=.img)
 
 .PHONY: all clean mds srcs
 
-hx-run: $(MDs)
-	@echo "HX"
-	@hx
-	@make -s all
-	@date >$@
-
 all: $(FLOPPYs)
 
 %.bin: %.asm
