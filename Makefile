@@ -1,6 +1,6 @@
-MDs = $(shell hx-srcs.sh)
-SRCs = $(shell hx-files.sh $(MDs))
-BINs = $(SRCs:.asm=.img)
+SRCs = $(filter-out _%,$(wildcard *.asm))
+BINs = $(SRCs:.asm=.bin)
+FLOPPYs =$(SRCs:.asm=.img)
 
 .PHONY: all clean mds srcs
 
@@ -10,19 +10,21 @@ hx-run: $(MDs)
 	@make -s all
 	@date >$@
 
-all: $(BINs)
+all: $(FLOPPYs)
 
-%.img: %.asm
+%.bin: %.asm
 	@echo "AS $@"
 	@nasm -f bin $^ -o $@
 
+empty.bin:
+	@echo "CREATE $@"
+	@dd if=/dev/zero of=$@ bs=512 count=2879
+
+%.img: %.bin empty.bin
+	@echo "CREATE $@"
+	@cat $(filter-out empty.bin,$^) empty.bin > $@
+
 clean:
 	@echo "RM"
-	@rm -f $(SRCs) $(BINs)
-
-mds:
-	@echo "MDs $(MDs)"
-
-srcs:
-	@echo "SRCs $(SRCs)"
+	@rm -f $(BINs) $(FLOPPYs) empty.bin
 
