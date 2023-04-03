@@ -1,65 +1,100 @@
 # Basic I/O functions
 
-```
-@Def(putc)
+```asm
+// ...
+; libraries
 putc:
-	push ax
-	@mul(push bx-di)
+	; push ax-di
 	mov ah,0x0e
 	mov bx,0x000f
 	int 0x10
-	@mul(pop di-bx)
-	pop ax
+	; pop ax-di
 	ret
-@End(putc)
+// ...
 ```
 
-```
-@def(push bx-di)
+```asm
+// ...
+putc:
+// ...
+	; push ax-di
+	push ax
 	push bx
 	push cx
 	push dx
 	push si
 	push di
-@end(push bx-di)
+// ...
 ```
 
-```
-@def(pop di-bx)
+```asm
+// ...
+putc:
+// ...
+	; pop ax-di
 	pop di
 	pop si
 	pop dx
 	pop cx
 	pop bx
-@end(pop di-bx)
+	pop ax
+// ...
 ```
 
-```
-@Def(getc)
+```asm
+// ...
+; libraries
 getc:
-	@mul(push bx-di)
+	; push bx-di
 	mov ah,0x00
 	int 0x16
-	@mul(pop di-bx)
+	; pop bx-di
 	ret
-@End(getc)
+// ...
 ```
 
+```asm
+// ...
+getc:
+// ...
+	; push bx-di
+	push bx
+	push cx
+	push dx
+	push si
+	push di
+// ...
 ```
-@Def(putn)
+
+```asm
+// ...
+getc:
+// ...
+	; pop bx-di
+	pop di
+	pop si
+	pop dx
+	pop cx
+	pop bx
+// ...
+```
+
+```asm
+// ...
+; libraries
 putn:
 	mov dx,0
 	mov cx,10
 	div cx
 	push dx
 	cmp ax,0
-	je putn_no_recur
+	je .no_recur
 	call putn
-putn_no_recur:
+.no_recur:
 	pop ax
 	add al,'0'
 	call putc
 	ret
-@End(putn)
+// ...
 ```
 

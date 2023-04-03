@@ -6,19 +6,21 @@ FLOPPYs =$(SRCs:.asm=.img)
 
 all: $(FLOPPYs)
 
+add.asm: add.md base.md io.md
+	mdp $(filter-out base.md io.md,$^)
+
+and.asm: and.md base.md io.md
+	mdp $(filter-out base.md io.md,$^)
+
 %.bin: %.asm
-	@echo "AS $@"
-	@nasm -f bin $^ -o $@
+	nasm -f bin $^ -o $@
 
 empty.bin:
-	@echo "CREATE $@"
-	@dd if=/dev/zero of=$@ bs=512 count=2879
+	dd if=/dev/zero of=$@ bs=512 count=2879
 
 %.img: %.bin empty.bin
-	@echo "CREATE $@"
-	@cat $(filter-out empty.bin,$^) empty.bin > $@
+	cat $(filter-out empty.bin,$^) empty.bin > $@
 
 clean:
-	@echo "RM"
-	@rm -f $(BINs) $(FLOPPYs) empty.bin
+	rm -f $(BINs) $(FLOPPYs) empty.bin
 
