@@ -6,6 +6,9 @@ FLOPPYs =$(SRCs:.asm=.img)
 
 all: $(FLOPPYs)
 
+hello.asm: hello.md base.md
+	mdp $(filter-out base.md,$^)
+
 add.asm: add.md base.md io.md
 	mdp $(filter-out base.md io.md,$^)
 

@@ -1,46 +1,39 @@
 # Simple Hello World
 
-```
-@inc(base.md)
-```
+Generates `hello.asm`.
 
-```
-@Def(file: hello.asm)
-	@Mul(pre)
-	@put(write msg)
-	@Mul(end)
-	@put(msg)
-	@Mul(fill)
-@End(file: hello.asm)
-```
+[base.md](base.md)
 
-```
-@def(write msg)
+```asm
+// ...
+; start
 	mov bx,string
 repeat:
 	mov al,[bx]
 	test al,al
 	je end
-	@put(write ch)
+	; write ch
 	inc bx
 	jmp repeat
-@end(write msg)
+// ...
 ```
 
-```
-@def(write ch)
+```asm
+// ...
+	; write ch
 	push bx
 	mov ah,0x0e
 	mov bx,0x000f
 	int 0x10
 	pop bx
-@end(write ch)
+// ...
 ```
 
-```
-@def(msg)
+```asm
+// ...
+; libraries
 string:
 	db "Hello, world",0
-@end(msg)
+// ...
 ```
 
