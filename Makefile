@@ -12,6 +12,9 @@ add.asm: add.md base.md io.md
 and.asm: and.md base.md io.md
 	mdp $(filter-out base.md io.md,$^)
 
+tic-tac-toe.asm: tic-tac-toe.md base.md io.md
+	mdp $(filter-out base.md io.md,$^)
+
 %.bin: %.asm
 	nasm -f bin $^ -o $@
 
